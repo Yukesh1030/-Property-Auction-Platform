@@ -37,6 +37,7 @@
         .sidebar-nav {
             padding: 2rem 0;
             flex: 1;
+            overflow-y: auto;
         }
         .nav-item {
             display: flex;
@@ -196,15 +197,16 @@
             </a>
         </div>
         <nav class="sidebar-nav">
-            <a href="#" class="nav-item active"><i class="fas fa-th-large"></i> Dashboard</a>
+            <a href="#" class="nav-item active"><i class="fas fa-th-large"></i> Overview</a>
             <a href="#" class="nav-item"><i class="fas fa-gavel"></i> My Bids</a>
             <a href="#" class="nav-item"><i class="fas fa-heart"></i> Saved Properties</a>
             <a href="#" class="nav-item"><i class="fas fa-file-invoice-dollar"></i> Transactions</a>
             <a href="#" class="nav-item"><i class="fas fa-user-cog"></i> Profile Settings</a>
+            
+            <div style="margin-top: 2rem; padding: 0 2rem;">
+                <a href="#" id="logoutBtn" class="nav-item" style="padding: 1rem; color: #ff3b30; background: rgba(255,59,48,0.1); border-radius: 8px; justify-content: center;"><i class="fas fa-sign-out-alt" style="margin-right: 0.5rem;"></i> Logout</a>
+            </div>
         </nav>
-        <div style="padding: 2rem;">
-            <a href="#" id="logoutBtn" class="nav-item" style="padding: 1rem; color: #ff3b30; background: rgba(255,59,48,0.1); border-radius: 8px; justify-content: center;"><i class="fas fa-sign-out-alt" style="margin-right: 0.5rem;"></i> Logout</a>
-        </div>
     </aside>
 
     <!-- Main Content -->
