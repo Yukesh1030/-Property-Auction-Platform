@@ -234,7 +234,7 @@ img {
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: inherit;
+  color: var(--color-light);
 }
 
 /* Footer */
