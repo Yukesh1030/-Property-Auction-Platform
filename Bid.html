@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Bidding | STACKLY Auctions</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background-color: var(--color-dark);
+            color: var(--color-light);
+            padding-top: 80px;
+        }
+        .bid-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            padding: 0 1.5rem;
+        }
+        .bid-main {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        .bid-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .bid-history-panel, .property-mini-panel {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .current-bid-label {
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+        .current-bid-amount {
+            font-size: 5rem;
+            font-family: var(--font-secondary);
+            color: var(--color-accent);
+            line-height: 1;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+        .current-bid-amount.update {
+            transform: scale(1.1);
+            color: white;
+        }
+        .bid-input-group {
+            display: flex;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50px;
+            padding: 0.5rem;
+            margin-bottom: 2rem;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid rgba(176,141,87,0.3);
+        }
+        .bid-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            text-align: center;
+            font-family: var(--font-primary);
+            outline: none;
+        }
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        .history-item.new {
+            animation: highlight 2s ease;
+        }
+        @keyframes highlight {
+            0% { background: rgba(176,141,87,0.2); }
+            100% { background: transparent; }
+        }
+        
+        @media (max-width: 1024px) {
+            .bid-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar scrolled">
+        <div class="container navbar-container">
+            <a href="index.html" class="nav-brand">
+                <img src="assets/Brand-logo.webp" alt="STACKLY">
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="Properties.html" class="nav-link">Properties</a></li>
+                <li><a href="Auctions.html" class="nav-link">Auctions</a></li>
+                <li><a href="HowItWorks.html" class="nav-link">How It Works</a></li>
+                <li><a href="About.html" class="nav-link">About</a></li>
+                <li><a href="Contact.html" class="nav-link">Contact</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    Live Auctions
+                </div>
+                <a href="Login.html" class="btn btn-primary">Login</a>
+            </div>
+
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <button class="close-menu"><i class="fas fa-times"></i></button>
+        <ul class="mobile-nav-links">
+            <li><a href="index.html" class="mobile-nav-link">Home</a></li>
+            <li><a href="Properties.html" class="mobile-nav-link">Properties</a></li>
+            <li><a href="Auctions.html" class="mobile-nav-link">Auctions</a></li>
+            <li><a href="HowItWorks.html" class="mobile-nav-link">How It Works</a></li>
+            <li><a href="About.html" class="mobile-nav-link">About</a></li>
+            <li><a href="Contact.html" class="mobile-nav-link">Contact</a></li>
+            <li><a href="Login.html" class="mobile-nav-link">Login</a></li>
+        </ul>
+    </div>
+
+    <div class="bid-container">
+        <!-- Main Bidding Area -->
+        <div class="bid-main gsap-fade-up">
+            <div style="position: absolute; top: 2rem; left: 2rem; color: #ff3b30; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
+                <div class="live-dot"></div> LIVE NOW
+            </div>
+            <div style="position: absolute; top: 2rem; right: 2rem;">
+                <div style="font-size: 0.75rem; color: rgba(255,255,255,0.6); text-transform: uppercase;">Time Remaining</div>
+                <div style="font-size: 1.5rem; font-weight: 600; color: #ff3b30; font-variant-numeric: tabular-nums;" id="countdown">02:18:43</div>
+            </div>
+
+            <div class="current-bid-label">CURRENT BID</div>
+            <div class="current-bid-amount" id="current-bid">₹1,84,00,000</div>
+            
+            <div style="color: rgba(255,255,255,0.6); margin-bottom: 2rem;">Minimum Next Bid: <span id="min-next-bid" style="color: white; font-weight: 600;">₹1,85,00,000</span></div>
+
+            <div class="bid-input-group">
+                <button class="btn" id="decrease-bid" style="background: rgba(255,255,255,0.1); color: white; border-radius: 50%; width: 40px; height: 40px; padding: 0;">-</button>
+                <input type="text" class="bid-input" id="bid-input" value="1,85,00,000" readonly>
+                <button class="btn" id="increase-bid" style="background: rgba(255,255,255,0.1); color: white; border-radius: 50%; width: 40px; height: 40px; padding: 0;">+</button>
+            </div>
+
+            <button class="btn btn-primary" id="place-bid-btn" style="width: 100%; max-width: 400px; font-size: 1.25rem; padding: 1.25rem;">PLACE BID</button>
+            
+            <div id="bid-message" style="margin-top: 1rem; height: 24px; color: #4cd964; font-weight: 500; opacity: 0; transition: opacity 0.3s;">Bid placed successfully!</div>
+        </div>
+
+        <!-- Sidebar Area -->
+        <div class="bid-sidebar">
+            <div class="property-mini-panel gsap-fade-up">
+                <img src="assets/Luxury.webp" alt="Luxury Villa" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+                <h3 style="font-family: var(--font-secondary); font-size: 1.5rem; margin-bottom: 0.5rem;">Luxury Villa</h3>
+                <p style="color: rgba(255,255,255,0.6); font-size: 0.875rem; margin-bottom: 1rem;"><i class="fas fa-map-marker-alt"></i> Chennai, Tamil Nadu</p>
+                <div style="display: flex; justify-content: space-between; font-size: 0.875rem;">
+                    <span style="color: rgba(255,255,255,0.6);">Starting Bid:</span>
+                    <span style="font-weight: 600;">₹1,50,00,000</span>
+                </div>
+                <a href="PropertyDetail.html" style="display: block; margin-top: 1rem; color: var(--color-accent); font-size: 0.875rem; text-decoration: underline;">View Property Details</a>
+            </div>
+
+            <div class="bid-history-panel gsap-fade-up" style="flex: 1; display: flex; flex-direction: column;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h4 style="font-family: var(--font-secondary); font-size: 1.5rem;">Bid History</h4>
+                    <span style="background: rgba(176,141,87,0.2); color: var(--color-accent); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;" id="total-bids">23 Bids</span>
+                </div>
+                
+                <div id="history-container" style="overflow-y: auto; flex: 1; max-height: 400px; padding-right: 0.5rem;">
+                    <div class="history-item">
+                        <div>
+                            <div style="font-weight: 600;">Bidder #A42</div>
+                            <div style="font-size: 0.75rem; color: rgba(255,255,255,0.5);">Just now</div>
+                        </div>
+                        <div style="font-weight: 600; color: var(--color-accent);">₹1,84,00,000</div>
+                    </div>
+                    <div class="history-item">
+                        <div>
+                            <div style="font-weight: 600;">Bidder #B17</div>
+                            <div style="font-size: 0.75rem; color: rgba(255,255,255,0.5);">2 mins ago</div>
+                        </div>
+                        <div style="font-weight: 600;">₹1,83,00,000</div>
+                    </div>
+                    <div class="history-item">
+                        <div>
+                            <div style="font-weight: 600;">Bidder #C08</div>
+                            <div style="font-size: 0.75rem; color: rgba(255,255,255,0.5);">15 mins ago</div>
+                        </div>
+                        <div style="font-weight: 600;">₹1,82,00,000</div>
+                    </div>
+                    <div class="history-item">
+                        <div>
+                            <div style="font-weight: 600;">Bidder #D21</div>
+                            <div style="font-size: 0.75rem; color: rgba(255,255,255,0.5);">45 mins ago</div>
+                        </div>
+                        <div style="font-weight: 600;">₹1,80,00,000</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let currentBidNum = 18400000;
+            let currentInputNum = 18500000;
+            let totalBids = 23;
+            const increment = 100000;
+
+            const currentBidEl = document.getElementById('current-bid');
+            const minNextBidEl = document.getElementById('min-next-bid');
+            const bidInputEl = document.getElementById('bid-input');
+            const incBtn = document.getElementById('increase-bid');
+            const decBtn = document.getElementById('decrease-bid');
+            const placeBtn = document.getElementById('place-bid-btn');
+            const historyContainer = document.getElementById('history-container');
+            const totalBidsEl = document.getElementById('total-bids');
+            const msgEl = document.getElementById('bid-message');
+
+            function formatCurrency(num) {
+                return '₹' + num.toLocaleString('en-IN');
+            }
+
+            incBtn.addEventListener('click', () => {
+                currentInputNum += increment;
+                bidInputEl.value = currentInputNum.toLocaleString('en-IN');
+            });
+
+            decBtn.addEventListener('click', () => {
+                if (currentInputNum > currentBidNum + increment) {
+                    currentInputNum -= increment;
+                    bidInputEl.value = currentInputNum.toLocaleString('en-IN');
+                }
+            });
+
+            placeBtn.addEventListener('click', () => {
+                // Check if user is logged in
+                const userRole = localStorage.getItem('userRole');
+                if (!userRole) {
+                    window.location.href = 'Login.html';
+                    return;
+                }
+
+                // Simulate bid logic
+                placeBtn.disabled = true;
+                placeBtn.textContent = 'PLACING...';
+                
+                setTimeout(() => {
+                    // Update state
+                    currentBidNum = currentInputNum;
+                    currentInputNum = currentBidNum + increment;
+                    totalBids++;
+                    
+                    // UI Updates
+                    currentBidEl.textContent = formatCurrency(currentBidNum);
+                    currentBidEl.classList.add('update');
+                    setTimeout(() => currentBidEl.classList.remove('update'), 300);
+                    
+                    minNextBidEl.textContent = formatCurrency(currentInputNum);
+                    bidInputEl.value = currentInputNum.toLocaleString('en-IN');
+                    totalBidsEl.textContent = `${totalBids} Bids`;
+                    
+                    // Add history item
+                    const newItem = document.createElement('div');
+                    newItem.className = 'history-item new';
+                    newItem.innerHTML = `
+                        <div>
+                            <div style="font-weight: 600;">You (Bidder #${Math.floor(Math.random() * 90 + 10)})</div>
+                            <div style="font-size: 0.75rem; color: rgba(255,255,255,0.5);">Just now</div>
+                        </div>
+                        <div style="font-weight: 600; color: var(--color-accent);">${formatCurrency(currentBidNum)}</div>
+                    `;
+                    historyContainer.insertBefore(newItem, historyContainer.firstChild);
+                    
+                    // Reset styling on previous top item
+                    const items = historyContainer.querySelectorAll('.history-item');
+                    if(items.length > 1) {
+                        items[1].querySelector('div:last-child').style.color = 'var(--color-light)';
+                    }
+                    
+                    // Show success
+                    placeBtn.textContent = 'PLACE BID';
+                    placeBtn.disabled = false;
+                    msgEl.style.opacity = '1';
+                    setTimeout(() => msgEl.style.opacity = '0', 3000);
+                    
+                }, 800);
+            });
+
+            // Countdown logic
+            let time = 2 * 3600 + 18 * 60 + 43; // 2:18:43
+            const countdownEl = document.getElementById('countdown');
+            
+            setInterval(() => {
+                if (time > 0) {
+                    time--;
+                    const h = Math.floor(time / 3600).toString().padStart(2, '0');
+                    const m = Math.floor((time % 3600) / 60).toString().padStart(2, '0');
+                    const s = (time % 60).toString().padStart(2, '0');
+                    countdownEl.textContent = `${h}:${m}:${s}`;
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

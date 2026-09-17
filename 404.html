@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found | STACKLY Auctions</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background-color: var(--color-light);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .error-container {
+            text-align: center;
+            z-index: 10;
+            max-width: 600px;
+        }
+        .error-code {
+            font-size: 10rem;
+            font-family: var(--font-secondary);
+            font-weight: 700;
+            color: var(--color-dark);
+            line-height: 1;
+            margin-bottom: 0;
+            position: relative;
+        }
+        .error-code::after {
+            content: '';
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--color-accent);
+        }
+        .error-title {
+            font-family: var(--font-secondary);
+            font-size: 2.5rem;
+            margin: 2rem 0 1rem;
+            color: var(--color-dark);
+        }
+        .error-desc {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        /* Decorative elements */
+        .bg-element {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(176,141,87,0.05);
+            z-index: 0;
+        }
+        .bg-1 {
+            width: 500px;
+            height: 500px;
+            top: -100px;
+            right: -100px;
+        }
+        .bg-2 {
+            width: 300px;
+            height: 300px;
+            bottom: -50px;
+            left: -50px;
+            background: rgba(17,17,17,0.03);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor"></div>
+    
+    <div class="bg-element bg-1 gsap-float"></div>
+    <div class="bg-element bg-2 gsap-float-reverse"></div>
+
+    <div class="error-container gsap-fade-up">
+        <h1 class="error-code">404</h1>
+        <h2 class="error-title">Page Not Found</h2>
+        <p class="error-desc">The property or page you are looking for has been sold, removed, or is temporarily unavailable. Let's get you back on track.</p>
+        
+        <div class="action-buttons">
+            <button onclick="history.back()" class="btn btn-outline" style="border-color: var(--color-dark); color: var(--color-dark); padding: 1rem 2rem;">
+                <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i> Go Back
+            </button>
+            <a href="index.html" class="btn btn-primary" style="padding: 1rem 2rem;">
+                Back to Home <i class="fas fa-home" style="margin-left: 0.5rem;"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.from('.error-container', {
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: 'power3.out'
+            });
+            
+            gsap.to('.bg-1', {
+                y: 30,
+                x: 20,
+                duration: 4,
+                repeat: -1,
+                yoyo: true,
+                ease: 'sine.inOut'
+            });
+            
+            gsap.to('.bg-2', {
+                y: -40,
+                x: -20,
+                duration: 5,
+                repeat: -1,
+                yoyo: true,
+                ease: 'sine.inOut'
+            });
+        });
+    </script>
+</body>
+</html>

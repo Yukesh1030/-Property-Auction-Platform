@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Dashboard | STACKLY Auctions</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background-color: var(--color-light);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Dashboard Layout */
+        .dashboard-sidebar {
+            width: 280px;
+            background: var(--color-dark);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+        }
+        .sidebar-header {
+            padding: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .sidebar-brand img {
+            height: 30px;
+        }
+        .sidebar-nav {
+            padding: 2rem 0;
+            flex: 1;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        .nav-item i {
+            width: 24px;
+            margin-right: 1rem;
+            font-size: 1.1rem;
+        }
+        .nav-item:hover, .nav-item.active {
+            background: rgba(176,141,87,0.1);
+            color: var(--color-accent);
+            border-right: 3px solid var(--color-accent);
+        }
+        
+        .dashboard-main {
+            flex: 1;
+            margin-left: 280px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .dashboard-topbar {
+            height: 80px;
+            background: white;
+            padding: 0 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--color-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-dark);
+            font-weight: 600;
+            font-family: var(--font-secondary);
+        }
+        
+        .dashboard-content {
+            padding: 3rem;
+            flex: 1;
+            background: #f9f9f9;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(176,141,87,0.1);
+            color: var(--color-accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        /* Tables */
+        .dashboard-panel {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .panel-title {
+            font-family: var(--font-secondary);
+            font-size: 1.5rem;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .data-table th, .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .data-table th {
+            color: #999;
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+        }
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .status-active { background: rgba(76,217,100,0.1); color: #4cd964; }
+        .status-won { background: rgba(176,141,87,0.1); color: var(--color-accent); }
+        .status-lost { background: rgba(255,59,48,0.1); color: #ff3b30; }
+        
+        @media (max-width: 1024px) {
+            .dashboard-sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+            .dashboard-main { margin-left: 0; }
+            .stats-grid { grid-template-columns: 1fr; }
+            /* Add mobile menu toggle logic later */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor"></div>
+
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="sidebar-brand">
+                <img src="assets/Brand-logo.webp" alt="STACKLY">
+            </a>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active"><i class="fas fa-th-large"></i> Dashboard</a>
+            <a href="#" class="nav-item"><i class="fas fa-gavel"></i> My Bids</a>
+            <a href="#" class="nav-item"><i class="fas fa-heart"></i> Saved Properties</a>
+            <a href="#" class="nav-item"><i class="fas fa-file-invoice-dollar"></i> Transactions</a>
+            <a href="#" class="nav-item"><i class="fas fa-user-cog"></i> Profile Settings</a>
+        </nav>
+        <div style="padding: 2rem;">
+            <a href="#" id="logoutBtn" class="nav-item" style="padding: 1rem; color: #ff3b30; background: rgba(255,59,48,0.1); border-radius: 8px; justify-content: center;"><i class="fas fa-sign-out-alt" style="margin-right: 0.5rem;"></i> Logout</a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <!-- Topbar -->
+        <header class="dashboard-topbar">
+            <div>
+                <h2 style="font-family: var(--font-secondary); font-size: 1.5rem;">Welcome back, Client!</h2>
+                <p style="color: #666; font-size: 0.875rem;">Here's an overview of your auction activity.</p>
+            </div>
+            <div class="user-profile">
+                <div style="text-align: right;">
+                    <div style="font-weight: 600;">John Doe</div>
+                    <div style="font-size: 0.75rem; color: #666;">Verified Bidder</div>
+                </div>
+                <div class="avatar">JD</div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <div class="dashboard-content">
+            
+            <!-- Stats -->
+            <div class="stats-grid gsap-fade-up">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-gavel"></i></div>
+                    <div>
+                        <div style="font-size: 2rem; font-family: var(--font-secondary); font-weight: 600; line-height: 1;">3</div>
+                        <div style="color: #666; font-size: 0.875rem; text-transform: uppercase; margin-top: 0.5rem;">Active Bids</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(76,217,100,0.1); color: #4cd964;"><i class="fas fa-trophy"></i></div>
+                    <div>
+                        <div style="font-size: 2rem; font-family: var(--font-secondary); font-weight: 600; line-height: 1;">1</div>
+                        <div style="color: #666; font-size: 0.875rem; text-transform: uppercase; margin-top: 0.5rem;">Auctions Won</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(17,17,17,0.1); color: var(--color-dark);"><i class="fas fa-wallet"></i></div>
+                    <div>
+                        <div style="font-size: 1.5rem; font-family: var(--font-secondary); font-weight: 600; line-height: 1.2;">₹5,00,000</div>
+                        <div style="color: #666; font-size: 0.875rem; text-transform: uppercase; margin-top: 0.25rem;">Total EMD Paid</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Bids -->
+            <div class="dashboard-panel gsap-fade-up">
+                <div class="panel-header">
+                    <h3 class="panel-title">My Active Bids</h3>
+                    <a href="Auctions.html" class="btn btn-outline" style="border-color: var(--color-dark); color: var(--color-dark); padding: 0.5rem 1rem; font-size: 0.875rem;">View All Auctions</a>
+                </div>
+                
+                <div style="overflow-x: auto;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th>Auction Date</th>
+                                <th>My Highest Bid</th>
+                                <th>Current Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 1rem;">
+                                        <img src="assets/Luxury.webp" alt="Property" style="width: 50px; height: 50px; border-radius: 4px; object-fit: cover;">
+                                        <div>
+                                            <div style="font-weight: 600;">Luxury Villa, ECR</div>
+                                            <div style="font-size: 0.75rem; color: #666;">ID: PROP-8429</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Ends in 02h 18m</td>
+                                <td style="font-weight: 600;">₹1,84,00,000</td>
+                                <td><span class="status-badge status-active">Winning</span></td>
+                                <td><a href="Bid.html" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.75rem;">Go to Bid Room</a></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 1rem;">
+                                        <img src="assets/Residential.webp" alt="Property" style="width: 50px; height: 50px; border-radius: 4px; object-fit: cover;">
+                                        <div>
+                                            <div style="font-weight: 600;">Sea View Apartment</div>
+                                            <div style="font-size: 0.75rem; color: #666;">ID: PROP-3102</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>18 Sep 2026</td>
+                                <td style="font-weight: 600; color: #666;">-</td>
+                                <td><span class="status-badge" style="background: #eee; color: #666;">Registered</span></td>
+                                <td><a href="PropertyDetail.html" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.75rem; border-color: #ddd; color: var(--color-dark);">View</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Past Activity -->
+            <div class="dashboard-panel gsap-fade-up">
+                <div class="panel-header">
+                    <h3 class="panel-title">Recent Activity</h3>
+                </div>
+                
+                <div style="overflow-x: auto;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Activity</th>
+                                <th>Amount / Detail</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>12 Sep 2026</td>
+                                <td>
+                                    <div style="font-weight: 600;">Won Auction</div>
+                                    <div style="font-size: 0.75rem; color: #666;">Commercial Space, OMR</div>
+                                </td>
+                                <td style="font-weight: 600;">₹4,20,00,000</td>
+                                <td><span class="status-badge status-won">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>05 Sep 2026</td>
+                                <td>
+                                    <div style="font-weight: 600;">EMD Payment</div>
+                                    <div style="font-size: 0.75rem; color: #666;">Luxury Villa, ECR</div>
+                                </td>
+                                <td style="font-weight: 600;">₹5,00,000</td>
+                                <td><span class="status-badge status-active">Processed</span></td>
+                            </tr>
+                            <tr>
+                                <td>28 Aug 2026</td>
+                                <td>
+                                    <div style="font-weight: 600;">Lost Auction</div>
+                                    <div style="font-size: 0.75rem; color: #666;">Industrial Land, Pune</div>
+                                </td>
+                                <td style="font-weight: 600; color: #666;">Final Bid: ₹1,15,00,000</td>
+                                <td><span class="status-badge status-lost">Outbid</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check auth
+            const role = localStorage.getItem('userRole');
+            if(role === 'Admin') {
+                window.location.href = 'AdminDashboard.html'; // Prevent client from accessing admin and vice versa
+            } else if (!role) {
+                window.location.href = 'Login.html';
+            }
+
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('userRole');
+                window.location.href = 'Login.html';
+            });
+            
+            // GSAP Entrance
+            gsap.from('.gsap-fade-up', {
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.2,
+                ease: "power2.out"
+            });
+        });
+    </script>
+</body>
+</html>

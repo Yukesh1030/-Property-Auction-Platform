@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | STACKLY Auctions</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, var(--color-light) 0%, #e0dcd0 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+        .back-link {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--color-dark);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            text-decoration: none;
+            z-index: 10;
+        }
+        .back-link i { transition: transform 0.3s; }
+        .back-link:hover i { transform: translateX(-5px); }
+        
+        .brand-logo {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            height: 30px;
+        }
+        
+        .auth-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 450px;
+            padding: 3rem;
+            opacity: 0; /* For GSAP */
+            transform: translateY(30px);
+        }
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .auth-title {
+            font-family: var(--font-primary);
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .auth-subtitle {
+            color: #666;
+            font-size: 0.875rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        .form-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--color-dark);
+        }
+        .form-control-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .form-icon {
+            position: absolute;
+            left: 1rem;
+            color: #999;
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 2.5rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .form-control:focus {
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 3px var(--color-accent-alpha-10);
+        }
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            color: #999;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        select.form-control {
+            appearance: none;
+            cursor: pointer;
+        }
+        .select-icon {
+            position: absolute;
+            right: 1rem;
+            color: #999;
+            pointer-events: none;
+        }
+        
+        .btn-submit {
+            width: 100%;
+            background: var(--color-dark);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 1rem;
+        }
+        .btn-submit:hover {
+            background: var(--color-accent);
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.875rem;
+            color: #666;
+        }
+        .auth-footer a {
+            color: var(--color-dark);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .auth-footer a:hover {
+            color: var(--color-accent);
+            text-decoration: underline;
+        }
+        
+        .error-message {
+            color: #ff3b30;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        .form-group.error .form-control {
+            border-color: #ff3b30;
+        }
+        .form-group.error .error-message {
+            display: block;
+        }
+        .form-group.error .form-icon {
+            color: #ff3b30;
+        }
+        
+        /* Side design element */
+        .auth-bg-element {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 30%;
+            background: linear-gradient(to right, transparent, rgba(17,17,17,0.05));
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="auth-bg-element"></div>
+    <div class="cursor"></div>
+
+    <a href="index.html" class="back-link">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+    
+    <img src="assets/Brand-logo.webp" alt="STACKLY" class="brand-logo">
+
+    <div class="auth-card">
+        <div class="auth-header">
+            <h1 class="auth-title">Welcome Back</h1>
+            <p class="auth-subtitle">Sign in to your account</p>
+        </div>
+        
+        <form id="loginForm" novalidate>
+            <div class="form-group">
+                <label class="form-label">Login As</label>
+                <div class="form-control-wrapper">
+                    <i class="fas fa-user form-icon"></i>
+                    <select class="form-control" id="roleSelect">
+                        <option value="Client">Client</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                    <i class="fas fa-chevron-down select-icon"></i>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <div class="form-control-wrapper">
+                    <i class="fas fa-envelope form-icon"></i>
+                    <input type="email" class="form-control" id="email" placeholder="user@example.com">
+                </div>
+                <div class="error-message">Please enter a valid email address</div>
+            </div>
+            
+            <div class="form-group">
+                <div class="form-label">
+                    <span>Password</span>
+                    <a href="404.html" style="color: #4cd964; text-decoration: none; text-transform: none;">Forgot password?</a>
+                </div>
+                <div class="form-control-wrapper">
+                    <i class="fas fa-lock form-icon"></i>
+                    <input type="password" class="form-control" id="password" placeholder="••••••••">
+                    <button type="button" class="password-toggle" id="togglePassword">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <div class="error-message">Password is required</div>
+            </div>
+            
+            <button type="submit" class="btn-submit">Login</button>
+        </form>
+        
+        <div class="auth-footer">
+            Don't have an account? <a href="Signup.html">Create an account</a>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // GSAP Entrance
+            gsap.to('.auth-card', {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: 'power3.out',
+                delay: 0.2
+            });
+
+            // Password Toggle
+            const togglePassword = document.getElementById('togglePassword');
+            const password = document.getElementById('password');
+            
+            togglePassword.addEventListener('click', function () {
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                this.querySelector('i').classList.toggle('fa-eye');
+                this.querySelector('i').classList.toggle('fa-eye-slash');
+            });
+
+            // Form Validation & Logic
+            const form = document.getElementById('loginForm');
+            const emailEl = document.getElementById('email');
+            const roleEl = document.getElementById('roleSelect');
+            
+            function setError(element) {
+                element.closest('.form-group').classList.add('error');
+            }
+            function clearError(element) {
+                element.closest('.form-group').classList.remove('error');
+            }
+            
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                let isValid = true;
+                
+                clearError(emailEl);
+                clearError(password);
+                
+                if (!validateEmail(emailEl.value.trim())) {
+                    setError(emailEl);
+                    isValid = false;
+                }
+                
+                if (password.value.trim() === '') {
+                    setError(password);
+                    isValid = false;
+                }
+                
+                if (isValid) {
+                    const btn = form.querySelector('button[type="submit"]');
+                    btn.textContent = 'LOGGING IN...';
+                    
+                    // Simulate auth
+                    setTimeout(() => {
+                        const role = roleEl.value;
+                        // Store role for dashboard usage
+                        localStorage.setItem('userRole', role);
+                        
+                        if (role === 'Admin') {
+                            window.location.href = 'AdminDashboard.html';
+                        } else {
+                            window.location.href = 'ClientDashboard.html';
+                        }
+                    }, 1000);
+                }
+            });
+            
+            [emailEl, password].forEach(el => {
+                el.addEventListener('input', () => clearError(el));
+            });
+        });
+    </script>
+</body>
+</html>

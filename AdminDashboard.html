@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | STACKLY Auctions</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background-color: var(--color-light);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Dashboard Layout */
+        .dashboard-sidebar {
+            width: 280px;
+            background: var(--color-dark);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+        }
+        .sidebar-header {
+            padding: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .sidebar-brand img {
+            height: 30px;
+        }
+        .admin-badge {
+            background: var(--color-accent);
+            color: var(--color-dark);
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        .sidebar-nav {
+            padding: 2rem 0;
+            flex: 1;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        .nav-item i {
+            width: 24px;
+            margin-right: 1rem;
+            font-size: 1.1rem;
+        }
+        .nav-item:hover, .nav-item.active {
+            background: rgba(176,141,87,0.1);
+            color: var(--color-accent);
+            border-right: 3px solid var(--color-accent);
+        }
+        
+        .dashboard-main {
+            flex: 1;
+            margin-left: 280px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .dashboard-topbar {
+            height: 80px;
+            background: white;
+            padding: 0 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--color-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-accent);
+            font-weight: 600;
+            font-family: var(--font-secondary);
+        }
+        
+        .dashboard-content {
+            padding: 3rem;
+            flex: 1;
+            background: #f9f9f9;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+        }
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .stat-title {
+            color: #666;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(176,141,87,0.1);
+            color: var(--color-accent);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-family: var(--font-secondary);
+            font-weight: 600;
+            color: var(--color-dark);
+        }
+        .stat-trend {
+            font-size: 0.75rem;
+            color: #4cd964;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+        
+        /* Tables */
+        .dashboard-panel {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .panel-title {
+            font-family: var(--font-secondary);
+            font-size: 1.5rem;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .data-table th, .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .data-table th {
+            color: #999;
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+        }
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .status-active { background: rgba(76,217,100,0.1); color: #4cd964; }
+        .status-pending { background: rgba(255,149,0,0.1); color: #ff9500; }
+        .status-closed { background: rgba(17,17,17,0.1); color: var(--color-dark); }
+        
+        .action-btn {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 0.25rem;
+            transition: color 0.3s;
+        }
+        .action-btn:hover { color: var(--color-dark); }
+        .action-btn.approve:hover { color: #4cd964; }
+        .action-btn.reject:hover { color: #ff3b30; }
+
+        @media (max-width: 1024px) {
+            .dashboard-sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+            .dashboard-main { margin-left: 0; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor"></div>
+
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="sidebar-brand">
+                <img src="assets/Brand-logo.webp" alt="STACKLY">
+            </a>
+            <span class="admin-badge">Admin</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active"><i class="fas fa-th-large"></i> Overview</a>
+            <a href="#" class="nav-item"><i class="fas fa-building"></i> Manage Properties</a>
+            <a href="#" class="nav-item"><i class="fas fa-gavel"></i> Manage Auctions</a>
+            <a href="#" class="nav-item"><i class="fas fa-users"></i> Users & KYC</a>
+            <a href="#" class="nav-item"><i class="fas fa-file-invoice-dollar"></i> Financials</a>
+            <a href="#" class="nav-item"><i class="fas fa-cog"></i> Platform Settings</a>
+        </nav>
+        <div style="padding: 2rem;">
+            <a href="#" id="logoutBtn" class="nav-item" style="padding: 1rem; color: #ff3b30; background: rgba(255,59,48,0.1); border-radius: 8px; justify-content: center;"><i class="fas fa-sign-out-alt" style="margin-right: 0.5rem;"></i> Logout</a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <!-- Topbar -->
+        <header class="dashboard-topbar">
+            <div>
+                <h2 style="font-family: var(--font-secondary); font-size: 1.5rem;">System Overview</h2>
+                <p style="color: #666; font-size: 0.875rem;">Real-time platform metrics and alerts.</p>
+            </div>
+            <div class="user-profile">
+                <div style="text-align: right;">
+                    <div style="font-weight: 600;">System Admin</div>
+                    <div style="font-size: 0.75rem; color: #666;">Superuser</div>
+                </div>
+                <div class="avatar">SA</div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <div class="dashboard-content">
+            
+            <!-- Stats -->
+            <div class="stats-grid gsap-fade-up">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-title">Total Revenue</div>
+                        <div class="stat-icon"><i class="fas fa-rupee-sign"></i></div>
+                    </div>
+                    <div class="stat-value">₹24.5 Cr</div>
+                    <div class="stat-trend"><i class="fas fa-arrow-up"></i> 12% from last month</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-title">Active Auctions</div>
+                        <div class="stat-icon" style="background: rgba(76,217,100,0.1); color: #4cd964;"><i class="fas fa-gavel"></i></div>
+                    </div>
+                    <div class="stat-value">12</div>
+                    <div class="stat-trend" style="color: #666;"><i class="fas fa-minus"></i> Same as yesterday</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-title">Pending Approvals</div>
+                        <div class="stat-icon" style="background: rgba(255,149,0,0.1); color: #ff9500;"><i class="fas fa-file-alt"></i></div>
+                    </div>
+                    <div class="stat-value">28</div>
+                    <div class="stat-trend" style="color: #ff3b30;"><i class="fas fa-arrow-up"></i> Requires attention</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-title">Registered Users</div>
+                        <div class="stat-icon" style="background: rgba(17,17,17,0.1); color: var(--color-dark);"><i class="fas fa-users"></i></div>
+                    </div>
+                    <div class="stat-value">8,520</div>
+                    <div class="stat-trend"><i class="fas fa-arrow-up"></i> 45 new this week</div>
+                </div>
+            </div>
+
+            <!-- Pending Actions -->
+            <div class="dashboard-panel gsap-fade-up">
+                <div class="panel-header">
+                    <h3 class="panel-title">Pending Approvals & KYC</h3>
+                    <button class="btn btn-outline" style="border-color: #ddd; color: var(--color-dark); padding: 0.5rem 1rem; font-size: 0.875rem;">View All</button>
+                </div>
+                
+                <div style="overflow-x: auto;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User / Property</th>
+                                <th>Request Type</th>
+                                <th>Submitted Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div style="font-weight: 600;">Rahul Sharma</div>
+                                    <div style="font-size: 0.75rem; color: #666;">USR-9921</div>
+                                </td>
+                                <td><i class="fas fa-id-card" style="margin-right: 0.5rem; color: #999;"></i> KYC Verification</td>
+                                <td>Today, 10:30 AM</td>
+                                <td><span class="status-badge status-pending">Pending Review</span></td>
+                                <td>
+                                    <button class="action-btn approve" title="Approve"><i class="fas fa-check-circle"></i></button>
+                                    <button class="action-btn reject" title="Reject"><i class="fas fa-times-circle"></i></button>
+                                    <button class="action-btn" title="View Details"><i class="fas fa-eye"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="font-weight: 600;">Commercial Plot, Hyderabad</div>
+                                    <div style="font-size: 0.75rem; color: #666;">PROP-4412</div>
+                                </td>
+                                <td><i class="fas fa-building" style="margin-right: 0.5rem; color: #999;"></i> New Listing Approval</td>
+                                <td>Yesterday, 4:15 PM</td>
+                                <td><span class="status-badge status-pending">Pending Review</span></td>
+                                <td>
+                                    <button class="action-btn approve" title="Approve"><i class="fas fa-check-circle"></i></button>
+                                    <button class="action-btn reject" title="Reject"><i class="fas fa-times-circle"></i></button>
+                                    <button class="action-btn" title="View Details"><i class="fas fa-eye"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="font-weight: 600;">Anita Desai</div>
+                                    <div style="font-size: 0.75rem; color: #666;">USR-8834</div>
+                                </td>
+                                <td><i class="fas fa-money-bill-wave" style="margin-right: 0.5rem; color: #999;"></i> EMD Refund Request</td>
+                                <td>15 Sep 2026</td>
+                                <td><span class="status-badge status-pending">Processing</span></td>
+                                <td>
+                                    <button class="action-btn approve" title="Process"><i class="fas fa-check-circle"></i></button>
+                                    <button class="action-btn" title="View Details"><i class="fas fa-eye"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Live & Upcoming Auctions -->
+            <div class="dashboard-panel gsap-fade-up">
+                <div class="panel-header">
+                    <h3 class="panel-title">Auction Management Overview</h3>
+                    <a href="Auctions.html" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Manage All Auctions</a>
+                </div>
+                
+                <div style="overflow-x: auto;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Property ID</th>
+                                <th>Auction Name</th>
+                                <th>Current Status</th>
+                                <th>Top Bid / Start Price</th>
+                                <th>Participants</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>PROP-8429</td>
+                                <td><div style="font-weight: 600;">Luxury Villa, ECR</div></td>
+                                <td><span class="status-badge status-active">Live (Ends in 2h)</span></td>
+                                <td style="font-weight: 600; color: var(--color-accent);">₹1,84,00,000</td>
+                                <td>23 Active Bidders</td>
+                            </tr>
+                            <tr>
+                                <td>PROP-3102</td>
+                                <td><div style="font-weight: 600;">Sea View Apartment</div></td>
+                                <td><span class="status-badge" style="background: #eee; color: #666;">Upcoming (18 Sep)</span></td>
+                                <td style="font-weight: 600;">Start: ₹3,15,00,000</td>
+                                <td>14 Registered</td>
+                            </tr>
+                            <tr>
+                                <td>PROP-9911</td>
+                                <td><div style="font-weight: 600;">Industrial Warehouse</div></td>
+                                <td><span class="status-badge status-closed">Closed</span></td>
+                                <td style="font-weight: 600; color: #4cd964;">Sold: ₹1,25,00,000</td>
+                                <td>42 Total Bids</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check auth
+            const role = localStorage.getItem('userRole');
+            if(role === 'Client') {
+                window.location.href = 'ClientDashboard.html'; // Prevent client from accessing admin
+            } else if (!role) {
+                window.location.href = 'Login.html';
+            }
+
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('userRole');
+                window.location.href = 'Login.html';
+            });
+            
+            // GSAP Entrance
+            gsap.from('.gsap-fade-up', {
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.2,
+                ease: "power2.out"
+            });
+            
+            // Action button logic mock
+            const actionBtns = document.querySelectorAll('.action-btn.approve, .action-btn.reject');
+            actionBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const row = this.closest('tr');
+                    const badge = row.querySelector('.status-badge');
+                    
+                    if(this.classList.contains('approve')) {
+                        badge.className = 'status-badge status-active';
+                        badge.textContent = 'Approved';
+                    } else {
+                        badge.className = 'status-badge status-closed';
+                        badge.textContent = 'Rejected';
+                    }
+                    
+                    // Hide action buttons after decision
+                    row.querySelector('td:last-child').innerHTML = '<span style="font-size: 0.75rem; color: #666;">Action taken</span>';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
