@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Dashboard | STACKLY Auctions</title>
+    <title>Profile Settings | STACKLY Auctions</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
         body {
@@ -214,11 +214,11 @@
             </a>
         </div>
         <nav class="sidebar-nav">
-            <a href="ClientDashboard.html" class="nav-item active"><i class="fas fa-th-large"></i> Overview</a>
+            <a href="ClientDashboard.html" class="nav-item"><i class="fas fa-th-large"></i> Overview</a>
             <a href="ClientBids.html" class="nav-item"><i class="fas fa-gavel"></i> My Bids</a>
             <a href="ClientSaved.html" class="nav-item"><i class="fas fa-heart"></i> Saved Properties</a>
             <a href="ClientTransactions.html" class="nav-item"><i class="fas fa-file-invoice-dollar"></i> Transactions</a>
-            <a href="ClientProfile.html" class="nav-item"><i class="fas fa-user-cog"></i> Profile Settings</a>
+            <a href="ClientProfile.html" class="nav-item active"><i class="fas fa-user-cog"></i> Profile Settings</a>
             
             <div style="margin-top: 0.5rem; padding: 0 2rem;">
                 <a href="#" id="logoutBtn" class="nav-item" style="padding: 1rem; color: #ff3b30; background: rgba(255,59,48,0.1); border-radius: 8px; justify-content: center;"><i class="fas fa-sign-out-alt" style="margin-right: 0.5rem;"></i> Logout</a>
@@ -232,8 +232,8 @@
         <header class="dashboard-topbar">
             <button class="dashboard-toggle"><i class="fas fa-bars"></i></button>
             <div>
-                <h2 style="font-family: var(--font-secondary); font-size: 1.5rem;">Welcome back, Client!</h2>
-                <p style="color: #666; font-size: 0.875rem;">Here's an overview of your auction activity.</p>
+                <h2 style="font-family: var(--font-secondary); font-size: 1.5rem;">Profile Settings</h2>
+                <p style="color: #666; font-size: 0.875rem;">Manage your personal information, security, and preferences.</p>
             </div>
             <div class="user-profile">
                 <div style="text-align: right;">
@@ -247,128 +247,136 @@
         <!-- Content -->
         <div class="dashboard-content">
             
-            <!-- Stats -->
-            <div class="stats-grid gsap-fade-up">
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-gavel"></i></div>
-                    <div>
-                        <div style="font-size: 2rem; font-family: var(--font-secondary); font-weight: 600; line-height: 1;">3</div>
-                        <div style="color: #666; font-size: 0.875rem; text-transform: uppercase; margin-top: 0.5rem;">Active Bids</div>
+            <!-- Section 1: Personal Information -->
+            <div class="dashboard-panel gsap-fade-up">
+                <div class="panel-header">
+                    <h3 class="panel-title">Personal Information</h3>
+                </div>
+                <div style="max-width: 800px; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div class="form-group">
+                        <label style="display:block; margin-bottom:0.5rem; font-weight:500;">First Name</label>
+                        <input type="text" class="form-control" style="width:100%; padding:0.8rem; border:1px solid #ddd; border-radius:4px;" value="John">
+                    </div>
+                    <div class="form-group">
+                        <label style="display:block; margin-bottom:0.5rem; font-weight:500;">Last Name</label>
+                        <input type="text" class="form-control" style="width:100%; padding:0.8rem; border:1px solid #ddd; border-radius:4px;" value="Doe">
+                    </div>
+                    <div class="form-group">
+                        <label style="display:block; margin-bottom:0.5rem; font-weight:500;">Email Address</label>
+                        <input type="email" class="form-control" style="width:100%; padding:0.8rem; border:1px solid #ddd; border-radius:4px;" value="john.doe@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label style="display:block; margin-bottom:0.5rem; font-weight:500;">Phone Number</label>
+                        <input type="text" class="form-control" style="width:100%; padding:0.8rem; border:1px solid #ddd; border-radius:4px;" value="+91 98765 43210">
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: rgba(76,217,100,0.1); color: #4cd964;"><i class="fas fa-trophy"></i></div>
-                    <div>
-                        <div style="font-size: 2rem; font-family: var(--font-secondary); font-weight: 600; line-height: 1;">1</div>
-                        <div style="color: #666; font-size: 0.875rem; text-transform: uppercase; margin-top: 0.5rem;">Auctions Won</div>
-                    </div>
+                <button class="btn-primary" style="margin-top: 1.5rem;">Update Profile</button>
+            </div>
+
+            <!-- Section 2: KYC Verification Status -->
+            <div class="dashboard-panel gsap-fade-up" style="background: rgba(76,217,100,0.05); border: 1px solid rgba(76,217,100,0.2);">
+                <div class="panel-header">
+                    <h3 class="panel-title">KYC Verification</h3>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: rgba(17,17,17,0.1); color: var(--color-dark);"><i class="fas fa-wallet"></i></div>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="width: 50px; height: 50px; background: #4cd964; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                        <i class="fas fa-check"></i>
+                    </div>
                     <div>
-                        <div style="font-size: 1.5rem; font-family: var(--font-secondary); font-weight: 600; line-height: 1.2;">₹5,00,000</div>
-                        <div style="color: #666; font-size: 0.875rem; text-transform: uppercase; margin-top: 0.25rem;">Total EMD Paid</div>
+                        <div style="font-size: 1.1rem; font-weight: 600; color: #111;">Fully Verified Account</div>
+                        <div style="font-size: 0.875rem; color: #666; margin-top: 0.25rem;">Your PAN and Aadhar have been successfully verified. You are eligible to bid.</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Active Bids -->
+            <!-- Section 3: Security Settings -->
             <div class="dashboard-panel gsap-fade-up">
                 <div class="panel-header">
-                    <h3 class="panel-title">My Active Bids</h3>
-                    <a href="Auctions.html" class="btn btn-outline" style="border-color: var(--color-dark); color: var(--color-dark); padding: 0.5rem 1rem; font-size: 0.875rem;">View All Auctions</a>
+                    <h3 class="panel-title">Security Settings</h3>
                 </div>
-                
+                <div style="max-width: 600px;">
+                    <h4 style="margin-bottom: 1rem;">Change Password</h4>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <input type="password" class="form-control" style="width:100%; padding:0.8rem; border:1px solid #ddd; border-radius:4px;" placeholder="Current Password">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <input type="password" class="form-control" style="width:100%; padding:0.8rem; border:1px solid #ddd; border-radius:4px;" placeholder="New Password">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <input type="password" class="form-control" style="width:100%; padding:0.8rem; border:1px solid #ddd; border-radius:4px;" placeholder="Confirm New Password">
+                    </div>
+                    <button class="btn-primary">Update Password</button>
+
+                    <hr style="border:0; border-top:1px solid #eee; margin: 2rem 0;">
+
+                    <h4 style="margin-bottom: 1rem;">Two-Factor Authentication (2FA)</h4>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:1rem; border:1px solid #ddd; border-radius:8px;">
+                        <div>
+                            <div style="font-weight:600;">Authenticator App</div>
+                            <div style="font-size:0.75rem; color:#666;">Use an app like Google Authenticator</div>
+                        </div>
+                        <button class="btn-primary" style="background:transparent; color:#111; border:1px solid #ddd; padding:0.4rem 1rem;">Enable</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Notification Preferences -->
+            <div class="dashboard-panel gsap-fade-up">
+                <div class="panel-header">
+                    <h3 class="panel-title">Notification Preferences</h3>
+                </div>
+                <div style="max-width: 600px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:1rem; border-bottom:1px solid #eee;">
+                        <div>
+                            <div style="font-weight:600;">Outbid Alerts</div>
+                            <div style="font-size:0.75rem; color:#666;">Notify me when someone outbids me</div>
+                        </div>
+                        <input type="checkbox" checked style="width:20px; height:20px; accent-color:var(--color-accent);">
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:1rem; border-bottom:1px solid #eee;">
+                        <div>
+                            <div style="font-weight:600;">Auction Reminders</div>
+                            <div style="font-size:0.75rem; color:#666;">Notify me 1 hour before saved auctions start</div>
+                        </div>
+                        <input type="checkbox" checked style="width:20px; height:20px; accent-color:var(--color-accent);">
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:1rem;">
+                        <div>
+                            <div style="font-weight:600;">Marketing Emails</div>
+                            <div style="font-size:0.75rem; color:#666;">Receive news and exclusive offers</div>
+                        </div>
+                        <input type="checkbox" style="width:20px; height:20px; accent-color:var(--color-accent);">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Account Activity Log -->
+            <div class="dashboard-panel gsap-fade-up">
+                <div class="panel-header">
+                    <h3 class="panel-title">Recent Account Activity</h3>
+                </div>
                 <div class="data-table-wrapper" style="overflow-x: auto;">
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th>Property</th>
-                                <th>Auction Date</th>
-                                <th>My Highest Bid</th>
-                                <th>Current Status</th>
                                 <th>Action</th>
+                                <th>Device / IP</th>
+                                <th>Location</th>
+                                <th>Date & Time</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>
-                                    <div style="display: flex; align-items: center; gap: 1rem;">
-                                        <img src="assets/Luxury.webp" alt="Property" style="width: 50px; height: 50px; border-radius: 4px; object-fit: cover;">
-                                        <div>
-                                            <div style="font-weight: 600;">Luxury Villa, ECR</div>
-                                            <div style="font-size: 0.75rem; color: #666;">ID: PROP-8429</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Ends in 02h 18m</td>
-                                <td style="font-weight: 600;">₹1,84,00,000</td>
-                                <td><span class="status-badge status-active">Winning</span></td>
-                                <td><a href="Bid.html" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.75rem;">Go to Bid Room</a></td>
+                                <td><div style="font-weight: 600;">Successful Login</div></td>
+                                <td>Chrome on Windows (192.168.1.1)</td>
+                                <td>Chennai, India</td>
+                                <td>Today, 10:45 AM</td>
                             </tr>
                             <tr>
-                                <td>
-                                    <div style="display: flex; align-items: center; gap: 1rem;">
-                                        <img src="assets/Residential.webp" alt="Property" style="width: 50px; height: 50px; border-radius: 4px; object-fit: cover;">
-                                        <div>
-                                            <div style="font-weight: 600;">Sea View Apartment</div>
-                                            <div style="font-size: 0.75rem; color: #666;">ID: PROP-3102</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>18 Sep 2026</td>
-                                <td style="font-weight: 600; color: #666;">-</td>
-                                <td><span class="status-badge" style="background: #eee; color: #666;">Registered</span></td>
-                                <td><a href="PropertyDetail.html" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.75rem; border-color: #ddd; color: var(--color-dark);">View</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            
-            <!-- Past Activity -->
-            <div class="dashboard-panel gsap-fade-up">
-                <div class="panel-header">
-                    <h3 class="panel-title">Recent Activity</h3>
-                </div>
-                
-                <div style="overflow-x: auto;">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Activity</th>
-                                <th>Amount / Detail</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>12 Sep 2026</td>
-                                <td>
-                                    <div style="font-weight: 600;">Won Auction</div>
-                                    <div style="font-size: 0.75rem; color: #666;">Commercial Space, OMR</div>
-                                </td>
-                                <td style="font-weight: 600;">₹4,20,00,000</td>
-                                <td><span class="status-badge status-won">Completed</span></td>
-                            </tr>
-                            <tr>
-                                <td>05 Sep 2026</td>
-                                <td>
-                                    <div style="font-weight: 600;">EMD Payment</div>
-                                    <div style="font-size: 0.75rem; color: #666;">Luxury Villa, ECR</div>
-                                </td>
-                                <td style="font-weight: 600;">₹5,00,000</td>
-                                <td><span class="status-badge status-active">Processed</span></td>
-                            </tr>
-                            <tr>
-                                <td>28 Aug 2026</td>
-                                <td>
-                                    <div style="font-weight: 600;">Lost Auction</div>
-                                    <div style="font-size: 0.75rem; color: #666;">Industrial Land, Pune</div>
-                                </td>
-                                <td style="font-weight: 600; color: #666;">Final Bid: ₹1,15,00,000</td>
-                                <td><span class="status-badge status-lost">Outbid</span></td>
+                                <td><div style="font-weight: 600;">Password Changed</div></td>
+                                <td>Safari on iOS (192.168.1.2)</td>
+                                <td>Chennai, India</td>
+                                <td>15 Sep 2026, 08:30 PM</td>
                             </tr>
                         </tbody>
                     </table>

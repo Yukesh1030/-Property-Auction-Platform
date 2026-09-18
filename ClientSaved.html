@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Dashboard | STACKLY Auctions</title>
+    <title>Saved Properties | STACKLY Auctions</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
         body {
@@ -214,9 +214,9 @@
             </a>
         </div>
         <nav class="sidebar-nav">
-            <a href="ClientDashboard.html" class="nav-item active"><i class="fas fa-th-large"></i> Overview</a>
+            <a href="ClientDashboard.html" class="nav-item"><i class="fas fa-th-large"></i> Overview</a>
             <a href="ClientBids.html" class="nav-item"><i class="fas fa-gavel"></i> My Bids</a>
-            <a href="ClientSaved.html" class="nav-item"><i class="fas fa-heart"></i> Saved Properties</a>
+            <a href="ClientSaved.html" class="nav-item active"><i class="fas fa-heart"></i> Saved Properties</a>
             <a href="ClientTransactions.html" class="nav-item"><i class="fas fa-file-invoice-dollar"></i> Transactions</a>
             <a href="ClientProfile.html" class="nav-item"><i class="fas fa-user-cog"></i> Profile Settings</a>
             
@@ -232,8 +232,8 @@
         <header class="dashboard-topbar">
             <button class="dashboard-toggle"><i class="fas fa-bars"></i></button>
             <div>
-                <h2 style="font-family: var(--font-secondary); font-size: 1.5rem;">Welcome back, Client!</h2>
-                <p style="color: #666; font-size: 0.875rem;">Here's an overview of your auction activity.</p>
+                <h2 style="font-family: var(--font-secondary); font-size: 1.5rem;">Saved Properties</h2>
+                <p style="color: #666; font-size: 0.875rem;">Manage your watchlist and price drop alerts.</p>
             </div>
             <div class="user-profile">
                 <div style="text-align: right;">
@@ -270,108 +270,111 @@
                         <div style="color: #666; font-size: 0.875rem; text-transform: uppercase; margin-top: 0.25rem;">Total EMD Paid</div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Active Bids -->
+            </div>            <!-- Section 2: Saved Properties Grid -->
             <div class="dashboard-panel gsap-fade-up">
                 <div class="panel-header">
-                    <h3 class="panel-title">My Active Bids</h3>
-                    <a href="Auctions.html" class="btn btn-outline" style="border-color: var(--color-dark); color: var(--color-dark); padding: 0.5rem 1rem; font-size: 0.875rem;">View All Auctions</a>
+                    <h3 class="panel-title">Your Watchlist</h3>
+                    <div style="display:flex; gap:0.5rem;">
+                        <button class="btn-primary" style="background:transparent; color:#111; border:1px solid #ddd; padding:0.4rem 1rem;">Sort By</button>
+                    </div>
                 </div>
-                
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+                    <!-- Card 1 -->
+                    <div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; position: relative;">
+                        <button style="position:absolute; top:1rem; right:1rem; background:white; border:none; width:35px; height:35px; border-radius:50%; color:#ff3b30; cursor:pointer; box-shadow:0 2px 10px rgba(0,0,0,0.1);"><i class="fas fa-heart"></i></button>
+                        <img src="assets/Commercial.webp" alt="Property" style="width:100%; height:180px; object-fit:cover;" onerror="this.src=''">
+                        <div style="padding: 1.5rem;">
+                            <h4 style="margin:0 0 0.5rem 0;">Prime Tech Park Office</h4>
+                            <p style="font-size:0.875rem; color:#666; margin:0 0 1rem 0;">OMR, Chennai</p>
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <div style="font-family:var(--font-secondary); font-size:1.25rem; font-weight:600;">₹5,20,00,000</div>
+                                <span class="status-badge" style="background:#eee; color:#666;">Upcoming</span>
+                            </div>
+                            <button class="btn-primary" style="width: 100%; margin-top:1rem;">View Auction</button>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; position: relative;">
+                        <button style="position:absolute; top:1rem; right:1rem; background:white; border:none; width:35px; height:35px; border-radius:50%; color:#ff3b30; cursor:pointer; box-shadow:0 2px 10px rgba(0,0,0,0.1);"><i class="fas fa-heart"></i></button>
+                        <img src="assets/Luxury.webp" alt="Property" style="width:100%; height:180px; object-fit:cover;" onerror="this.src=''">
+                        <div style="padding: 1.5rem;">
+                            <h4 style="margin:0 0 0.5rem 0;">Luxury Villa, ECR</h4>
+                            <p style="font-size:0.875rem; color:#666; margin:0 0 1rem 0;">ECR, Chennai</p>
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <div style="font-family:var(--font-secondary); font-size:1.25rem; font-weight:600;">₹1,84,00,000</div>
+                                <span class="status-badge status-active">Live</span>
+                            </div>
+                            <button class="btn-primary" style="width: 100%; margin-top:1rem;">Bid Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Price Drop Alerts -->
+            <div class="dashboard-panel gsap-fade-up">
+                <div class="panel-header">
+                    <h3 class="panel-title">Price Drop Alerts</h3>
+                </div>
+                <div style="max-width: 600px;">
+                    <p style="font-size: 0.875rem; color: #666; margin-bottom: 1.5rem;">Get notified instantly if the reserve price of your saved properties drops before the auction starts.</p>
+                    
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:1rem; border:1px solid #ddd; border-radius:8px; margin-bottom:1rem;">
+                        <div>
+                            <div style="font-weight:600;">Email Alerts</div>
+                            <div style="font-size:0.75rem; color:#666;">Receive daily summary of price changes</div>
+                        </div>
+                        <input type="checkbox" checked style="width:20px; height:20px; accent-color:var(--color-accent);">
+                    </div>
+
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:1rem; border:1px solid #ddd; border-radius:8px;">
+                        <div>
+                            <div style="font-weight:600;">SMS Alerts</div>
+                            <div style="font-size:0.75rem; color:#666;">Instant SMS when a price drops by more than 5%</div>
+                        </div>
+                        <input type="checkbox" checked style="width:20px; height:20px; accent-color:var(--color-accent);">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Recently Viewed -->
+            <div class="dashboard-panel gsap-fade-up">
+                <div class="panel-header">
+                    <h3 class="panel-title">Recently Viewed</h3>
+                </div>
                 <div class="data-table-wrapper" style="overflow-x: auto;">
                     <table class="data-table">
                         <thead>
                             <tr>
                                 <th>Property</th>
-                                <th>Auction Date</th>
-                                <th>My Highest Bid</th>
-                                <th>Current Status</th>
+                                <th>Viewed On</th>
+                                <th>Base Price</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>
-                                    <div style="display: flex; align-items: center; gap: 1rem;">
-                                        <img src="assets/Luxury.webp" alt="Property" style="width: 50px; height: 50px; border-radius: 4px; object-fit: cover;">
-                                        <div>
-                                            <div style="font-weight: 600;">Luxury Villa, ECR</div>
-                                            <div style="font-size: 0.75rem; color: #666;">ID: PROP-8429</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Ends in 02h 18m</td>
-                                <td style="font-weight: 600;">₹1,84,00,000</td>
-                                <td><span class="status-badge status-active">Winning</span></td>
-                                <td><a href="Bid.html" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.75rem;">Go to Bid Room</a></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div style="display: flex; align-items: center; gap: 1rem;">
-                                        <img src="assets/Residential.webp" alt="Property" style="width: 50px; height: 50px; border-radius: 4px; object-fit: cover;">
-                                        <div>
-                                            <div style="font-weight: 600;">Sea View Apartment</div>
-                                            <div style="font-size: 0.75rem; color: #666;">ID: PROP-3102</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>18 Sep 2026</td>
-                                <td style="font-weight: 600; color: #666;">-</td>
-                                <td><span class="status-badge" style="background: #eee; color: #666;">Registered</span></td>
-                                <td><a href="PropertyDetail.html" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.75rem; border-color: #ddd; color: var(--color-dark);">View</a></td>
+                                <td><div style="font-weight: 600;">Industrial Plot, Oragadam</div></td>
+                                <td>Today, 10:30 AM</td>
+                                <td>₹8,00,00,000</td>
+                                <td><button class="btn-primary" style="padding: 0.4rem 1rem; font-size: 0.75rem; background:transparent; color:var(--color-dark); border:1px solid #ddd;">View Again</button></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            
-            <!-- Past Activity -->
+
+            <!-- Section 5: Smart Recommendations -->
             <div class="dashboard-panel gsap-fade-up">
                 <div class="panel-header">
-                    <h3 class="panel-title">Recent Activity</h3>
+                    <h3 class="panel-title">Recommended For You</h3>
                 </div>
-                
-                <div style="overflow-x: auto;">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Activity</th>
-                                <th>Amount / Detail</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>12 Sep 2026</td>
-                                <td>
-                                    <div style="font-weight: 600;">Won Auction</div>
-                                    <div style="font-size: 0.75rem; color: #666;">Commercial Space, OMR</div>
-                                </td>
-                                <td style="font-weight: 600;">₹4,20,00,000</td>
-                                <td><span class="status-badge status-won">Completed</span></td>
-                            </tr>
-                            <tr>
-                                <td>05 Sep 2026</td>
-                                <td>
-                                    <div style="font-weight: 600;">EMD Payment</div>
-                                    <div style="font-size: 0.75rem; color: #666;">Luxury Villa, ECR</div>
-                                </td>
-                                <td style="font-weight: 600;">₹5,00,000</td>
-                                <td><span class="status-badge status-active">Processed</span></td>
-                            </tr>
-                            <tr>
-                                <td>28 Aug 2026</td>
-                                <td>
-                                    <div style="font-weight: 600;">Lost Auction</div>
-                                    <div style="font-size: 0.75rem; color: #666;">Industrial Land, Pune</div>
-                                </td>
-                                <td style="font-weight: 600; color: #666;">Final Bid: ₹1,15,00,000</td>
-                                <td><span class="status-badge status-lost">Outbid</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <p style="font-size:0.875rem; color:#666; margin-bottom:1.5rem;">Based on your watchlist, you might be interested in these upcoming auctions.</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem;">
+                    <div style="border: 1px solid #eee; border-radius: 8px; padding: 1rem;">
+                        <div style="font-weight: 600; margin-bottom:0.25rem;">Beachfront Land, Mahabalipuram</div>
+                        <div style="font-size: 1.1rem; font-family: var(--font-secondary); font-weight:600; color:var(--color-accent); margin-bottom:1rem;">₹4,50,00,000</div>
+                        <button class="btn-primary" style="width:100%; font-size:0.75rem; padding:0.5rem;">Add to Watchlist</button>
+                    </div>
                 </div>
             </div>
 

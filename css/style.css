@@ -80,7 +80,7 @@ img {
 }
 
 /* Buttons */
-.btn {
+.btn, .btn-primary, .btn-outline, .btn-dark {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -92,9 +92,16 @@ img {
   font-size: 0.875rem;
   cursor: pointer;
   border: 1px solid transparent;
-  transition: all var(--transition-normal);
+  border-radius: 6px;
+  transition: all var(--transition-fast);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.btn:hover, .btn-primary:hover, .btn-outline:hover, .btn-dark:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
 }
 
 .btn-primary {

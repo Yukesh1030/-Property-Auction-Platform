@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Dashboard | STACKLY Auctions</title>
+    <title>Transactions | STACKLY Auctions</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
         body {
@@ -214,10 +214,10 @@
             </a>
         </div>
         <nav class="sidebar-nav">
-            <a href="ClientDashboard.html" class="nav-item active"><i class="fas fa-th-large"></i> Overview</a>
+            <a href="ClientDashboard.html" class="nav-item"><i class="fas fa-th-large"></i> Overview</a>
             <a href="ClientBids.html" class="nav-item"><i class="fas fa-gavel"></i> My Bids</a>
             <a href="ClientSaved.html" class="nav-item"><i class="fas fa-heart"></i> Saved Properties</a>
-            <a href="ClientTransactions.html" class="nav-item"><i class="fas fa-file-invoice-dollar"></i> Transactions</a>
+            <a href="ClientTransactions.html" class="nav-item active"><i class="fas fa-file-invoice-dollar"></i> Transactions</a>
             <a href="ClientProfile.html" class="nav-item"><i class="fas fa-user-cog"></i> Profile Settings</a>
             
             <div style="margin-top: 0.5rem; padding: 0 2rem;">
@@ -232,8 +232,8 @@
         <header class="dashboard-topbar">
             <button class="dashboard-toggle"><i class="fas fa-bars"></i></button>
             <div>
-                <h2 style="font-family: var(--font-secondary); font-size: 1.5rem;">Welcome back, Client!</h2>
-                <p style="color: #666; font-size: 0.875rem;">Here's an overview of your auction activity.</p>
+                <h2 style="font-family: var(--font-secondary); font-size: 1.5rem;">Transactions</h2>
+                <p style="color: #666; font-size: 0.875rem;">Manage your EMD payments, settlements, and invoices.</p>
             </div>
             <div class="user-profile">
                 <div style="text-align: right;">
@@ -283,95 +283,131 @@
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th>Property</th>
-                                <th>Auction Date</th>
-                                <th>My Highest Bid</th>
-                                <th>Current Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div style="display: flex; align-items: center; gap: 1rem;">
-                                        <img src="assets/Luxury.webp" alt="Property" style="width: 50px; height: 50px; border-radius: 4px; object-fit: cover;">
-                                        <div>
-                                            <div style="font-weight: 600;">Luxury Villa, ECR</div>
-                                            <div style="font-size: 0.75rem; color: #666;">ID: PROP-8429</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Ends in 02h 18m</td>
-                                <td style="font-weight: 600;">₹1,84,00,000</td>
-                                <td><span class="status-badge status-active">Winning</span></td>
-                                <td><a href="Bid.html" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.75rem;">Go to Bid Room</a></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div style="display: flex; align-items: center; gap: 1rem;">
-                                        <img src="assets/Residential.webp" alt="Property" style="width: 50px; height: 50px; border-radius: 4px; object-fit: cover;">
-                                        <div>
-                                            <div style="font-weight: 600;">Sea View Apartment</div>
-                                            <div style="font-size: 0.75rem; color: #666;">ID: PROP-3102</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>18 Sep 2026</td>
-                                <td style="font-weight: 600; color: #666;">-</td>
-                                <td><span class="status-badge" style="background: #eee; color: #666;">Registered</span></td>
-                                <td><a href="PropertyDetail.html" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.75rem; border-color: #ddd; color: var(--color-dark);">View</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="stat-icon" style="background: rgba(176,141,87,0.1); color: var(--color-accent);"><i class="fas fa-wallet"></i></div>
+                    <div>
+                        <div style="font-size: 1.8rem; font-family: var(--font-secondary); font-weight: 600; line-height: 1;">₹5,00,000</div>
+                        <div style="color: #666; font-size: 0.875rem; text-transform: uppercase; margin-top: 0.5rem;">Total EMD Paid</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(255,149,0,0.1); color: #ff9500;"><i class="fas fa-file-invoice"></i></div>
+                    <div>
+                        <div style="font-size: 1.8rem; font-family: var(--font-secondary); font-weight: 600; line-height: 1;">₹1,89,00,000</div>
+                        <div style="color: #666; font-size: 0.875rem; text-transform: uppercase; margin-top: 0.5rem;">Pending Settlements</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(76,217,100,0.1); color: #4cd964;"><i class="fas fa-undo-alt"></i></div>
+                    <div>
+                        <div style="font-size: 1.8rem; font-family: var(--font-secondary); font-weight: 600; line-height: 1;">₹2,00,000</div>
+                        <div style="color: #666; font-size: 0.875rem; text-transform: uppercase; margin-top: 0.5rem;">Refunded EMDs</div>
+                    </div>
                 </div>
             </div>
-            
-            <!-- Past Activity -->
+
+            <!-- Section 2: EMD Payments Ledger -->
             <div class="dashboard-panel gsap-fade-up">
                 <div class="panel-header">
-                    <h3 class="panel-title">Recent Activity</h3>
+                    <h3 class="panel-title">EMD Payments Ledger</h3>
                 </div>
-                
-                <div style="overflow-x: auto;">
+                <div class="data-table-wrapper" style="overflow-x: auto;">
                     <table class="data-table">
                         <thead>
                             <tr>
+                                <th>Transaction ID</th>
+                                <th>Property</th>
+                                <th>Amount</th>
                                 <th>Date</th>
-                                <th>Activity</th>
-                                <th>Amount / Detail</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>12 Sep 2026</td>
-                                <td>
-                                    <div style="font-weight: 600;">Won Auction</div>
-                                    <div style="font-size: 0.75rem; color: #666;">Commercial Space, OMR</div>
-                                </td>
-                                <td style="font-weight: 600;">₹4,20,00,000</td>
-                                <td><span class="status-badge status-won">Completed</span></td>
+                                <td><div style="font-weight: 600;">TXN-849201</div></td>
+                                <td>Luxury Villa, ECR</td>
+                                <td>₹5,00,000</td>
+                                <td>15 Sep 2026</td>
+                                <td><span class="status-badge status-active">Paid</span></td>
                             </tr>
                             <tr>
-                                <td>05 Sep 2026</td>
-                                <td>
-                                    <div style="font-weight: 600;">EMD Payment</div>
-                                    <div style="font-size: 0.75rem; color: #666;">Luxury Villa, ECR</div>
-                                </td>
-                                <td style="font-weight: 600;">₹5,00,000</td>
-                                <td><span class="status-badge status-active">Processed</span></td>
-                            </tr>
-                            <tr>
-                                <td>28 Aug 2026</td>
-                                <td>
-                                    <div style="font-weight: 600;">Lost Auction</div>
-                                    <div style="font-size: 0.75rem; color: #666;">Industrial Land, Pune</div>
-                                </td>
-                                <td style="font-weight: 600; color: #666;">Final Bid: ₹1,15,00,000</td>
-                                <td><span class="status-badge status-lost">Outbid</span></td>
+                                <td><div style="font-weight: 600;">TXN-848102</div></td>
+                                <td>Commercial Space, OMR</td>
+                                <td>₹8,00,000</td>
+                                <td>10 Sep 2026</td>
+                                <td><span class="status-badge" style="background: #eee; color:#666;">Refunded</span></td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            <!-- Section 3: Auction Settlements -->
+            <div class="dashboard-panel gsap-fade-up">
+                <div class="panel-header">
+                    <h3 class="panel-title">Auction Settlements (Invoices)</h3>
+                </div>
+                <div class="data-table-wrapper" style="overflow-x: auto;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Invoice No.</th>
+                                <th>Property</th>
+                                <th>Total Winning Bid</th>
+                                <th>Pending Balance</th>
+                                <th>Due Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><div style="font-weight: 600;">INV-0092</div></td>
+                                <td>Seaside Plot, ECR</td>
+                                <td>₹2,10,00,000</td>
+                                <td><strong style="color: #ff3b30;">₹1,89,00,000</strong></td>
+                                <td>25 Sep 2026</td>
+                                <td><button class="btn-primary" style="padding: 0.4rem 1rem; font-size: 0.75rem;">Pay Now</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Section 4: Refund Tracking -->
+            <div class="dashboard-panel gsap-fade-up">
+                <div class="panel-header">
+                    <h3 class="panel-title">Refund Tracking</h3>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div style="padding: 1rem; border: 1px solid #ddd; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 600;">EMD Refund: Industrial Land, Pune</div>
+                            <div style="font-size: 0.75rem; color: #666; margin-top: 0.25rem;">Initiated on 28 Aug 2026</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-family: var(--font-secondary); font-size: 1.1rem; font-weight: 600;">₹3,00,000</div>
+                            <span class="status-badge" style="background: rgba(76,217,100,0.1); color: #4cd964; margin-top: 0.25rem; display: inline-block;">Completed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Payment Methods -->
+            <div class="dashboard-panel gsap-fade-up">
+                <div class="panel-header">
+                    <h3 class="panel-title">Saved Payment Methods</h3>
+                    <button class="btn-primary" style="background:transparent; color:#111; border:1px solid #ddd; padding:0.4rem 1rem;">Add New Card</button>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">
+                    <div style="padding: 1.5rem; border: 1px solid #ddd; border-radius: 8px; position: relative;">
+                        <i class="fab fa-cc-visa" style="font-size: 2rem; color: #1a1f71; margin-bottom: 1rem;"></i>
+                        <div style="font-weight: 600; font-family: monospace; font-size: 1.1rem; letter-spacing: 2px;">**** **** **** 4242</div>
+                        <div style="font-size: 0.75rem; color: #666; margin-top: 0.5rem;">Expires 12/28</div>
+                        <button style="position:absolute; top:1rem; right:1rem; background:none; border:none; color:#ff3b30; cursor:pointer;"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div style="padding: 1.5rem; border: 1px dashed #ddd; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-direction: column; cursor: pointer;">
+                        <i class="fas fa-plus" style="font-size: 1.5rem; color: #999; margin-bottom: 0.5rem;"></i>
+                        <div style="font-size: 0.875rem; color: #666;">Add Bank Account for RTGS/NEFT</div>
+                    </div>
                 </div>
             </div>
 
