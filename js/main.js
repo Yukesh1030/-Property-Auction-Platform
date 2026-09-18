@@ -111,7 +111,13 @@ document.addEventListener("DOMContentLoaded", () => {
       
       const avatarEl = profile.querySelector('.avatar');
       if (avatarEl) {
-        const initials = userName.substring(0, 2).toUpperCase();
+        let initials = userName.substring(0, 2).toUpperCase();
+        if (userName.includes(' ')) {
+            const parts = userName.split(' ');
+            if (parts.length > 1 && parts[1].length > 0) {
+                initials = (parts[0][0] + parts[1][0]).toUpperCase();
+            }
+        }
         avatarEl.textContent = initials;
       }
     });
