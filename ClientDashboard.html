@@ -387,8 +387,6 @@
             const role = localStorage.getItem('userRole');
             if(role === 'Admin') {
                 window.location.href = 'AdminDashboard.html'; // Prevent client from accessing admin and vice versa
-            } else if (!role) {
-                window.location.href = 'Login.html';
             }
 
             // Logout

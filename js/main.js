@@ -258,3 +258,46 @@ function initScrollAnimations() {
     });
   });
 }
+
+// Admin Dashboard Dummy Links and Validation
+document.addEventListener("DOMContentLoaded", () => {
+  const mainContent = document.querySelector('.dashboard-main');
+  if (mainContent) {
+    // Select all action buttons and links, excluding toggle, logout, and valid hrefs
+    const actionEls = mainContent.querySelectorAll('button:not(.dashboard-toggle):not(#logoutBtn), a[href="#"], a:not([href])');
+    
+    actionEls.forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        const formContainer = el.closest('.dashboard-panel, .form-group') || document;
+        const inputs = formContainer.querySelectorAll('input:not([type="checkbox"]):not([type="radio"]), select, textarea');
+        
+        // If there are inputs nearby and button text suggests an action like save/submit
+        const elText = el.textContent.trim().toLowerCase();
+        const isSubmitAction = elText.includes('save') || elText.includes('submit') || elText.includes('add') || elText.includes('update');
+        
+        let isValid = true;
+        if (inputs.length > 0 && isSubmitAction) {
+            inputs.forEach(input => {
+                // simple validation: if empty, mark as invalid
+                if (!input.value.trim()) {
+                    isValid = false;
+                    input.style.border = '1px solid red';
+                } else {
+                    input.style.border = '1px solid #ddd';
+                }
+            });
+            
+            if (!isValid) {
+                alert('Please fill in all required fields before proceeding.');
+                return;
+            }
+        }
+        
+        // Redirect to 404 page
+        window.location.href = '404.html';
+      });
+    });
+  }
+});

@@ -454,8 +454,6 @@
             const role = localStorage.getItem('userRole');
             if(role === 'Client') {
                 window.location.href = 'ClientDashboard.html'; // Prevent client from accessing admin
-            } else if (!role) {
-                window.location.href = 'Login.html';
             }
 
             // Logout
