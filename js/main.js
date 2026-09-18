@@ -117,6 +117,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Dashboard Sidebar Toggle
+  const dashboardToggles = document.querySelectorAll('.dashboard-toggle');
+  const dashboardSidebar = document.querySelector('.dashboard-sidebar');
+  if (dashboardToggles.length > 0 && dashboardSidebar) {
+    dashboardToggles.forEach(btn => {
+      btn.addEventListener('click', () => {
+        dashboardSidebar.classList.toggle('active');
+      });
+    });
+    
+    // Close when clicking outside on mobile
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth <= 1024 && dashboardSidebar.classList.contains('active')) {
+        if (!dashboardSidebar.contains(e.target) && !e.target.closest('.dashboard-toggle')) {
+          dashboardSidebar.classList.remove('active');
+        }
+      }
+    });
+  }
+
 });
 
 function initHeroAnimations() {

@@ -225,8 +225,13 @@
         .action-btn.approve:hover { color: #4cd964; }
         .action-btn.reject:hover { color: #ff3b30; }
 
+        .dashboard-toggle { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--color-dark); padding: 0; }
         @media (max-width: 1024px) {
-            .dashboard-sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+            .dashboard-toggle { display: block; }
+            .dashboard-topbar { justify-content: flex-start !important; gap: 1rem; padding: 0 1.5rem !important; }
+            .dashboard-topbar .user-profile { margin-left: auto; }
+            .dashboard-sidebar { transform: translateX(-100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 5px 0 25px rgba(0,0,0,0.2); }
+            .dashboard-sidebar.active { transform: translateX(0); }
             .dashboard-main { margin-left: 0; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
         }
@@ -265,6 +270,7 @@
     <main class="dashboard-main">
         <!-- Topbar -->
         <header class="dashboard-topbar">
+            <button class="dashboard-toggle"><i class="fas fa-bars"></i></button>
             <div>
                 <h2 style="font-family: var(--font-secondary); font-size: 1.5rem;">System Overview</h2>
                 <p style="color: #666; font-size: 0.875rem;">Real-time platform metrics and alerts.</p>
