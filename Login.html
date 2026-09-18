@@ -315,6 +315,10 @@
                         // Store role for dashboard usage
                         localStorage.setItem('userRole', role);
                         
+                        const emailVal = emailEl.value.trim();
+                        const userName = emailVal ? emailVal.split('@')[0] : (role === 'Admin' ? 'System Admin' : 'Client');
+                        localStorage.setItem('userName', userName);
+                        
                         if (role === 'Admin') {
                             window.location.href = 'AdminDashboard.html';
                         } else {

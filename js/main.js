@@ -87,6 +87,36 @@ document.addEventListener("DOMContentLoaded", () => {
   // Scroll Animations
   initScrollAnimations();
 
+  // Dynamic User Profile
+  const userName = localStorage.getItem('userName');
+  const userRole = localStorage.getItem('userRole');
+  if (userName) {
+    const userProfileDivs = document.querySelectorAll('.user-profile');
+    userProfileDivs.forEach(profile => {
+      // First div inside the wrapper is the name, second is the role
+      const wrapper = profile.querySelector('div[style*="text-align: right"]');
+      if (wrapper) {
+        const nameEl = wrapper.querySelector('div:first-child');
+        const roleEl = wrapper.querySelector('div:last-child');
+        
+        if (nameEl) {
+          const formattedName = userName.charAt(0).toUpperCase() + userName.slice(1);
+          nameEl.textContent = formattedName;
+        }
+        
+        if (roleEl && userRole) {
+          roleEl.textContent = userRole === 'Admin' ? 'Superuser' : 'Premium Bidder';
+        }
+      }
+      
+      const avatarEl = profile.querySelector('.avatar');
+      if (avatarEl) {
+        const initials = userName.substring(0, 2).toUpperCase();
+        avatarEl.textContent = initials;
+      }
+    });
+  }
+
 });
 
 function initHeroAnimations() {
