@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const active = document.querySelector('.faq-question.active');
       if (active && active !== question) {
         active.classList.remove('active');
-        active.nextElementSibling.style.maxHeight = null;
+        active.nextElementSibling.style.maxHeight = "0px";
       }
       
       question.classList.toggle('active');
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (question.classList.contains('active')) {
         answer.style.maxHeight = answer.scrollHeight + "px";
       } else {
-        answer.style.maxHeight = null;
+        answer.style.maxHeight = "0px";
       }
     });
   });
