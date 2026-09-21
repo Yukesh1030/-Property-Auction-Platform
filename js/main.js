@@ -164,14 +164,23 @@ function initHeroAnimations() {
   }
 
   if (heroTitle) {
-    const text = new SplitType(heroTitle, { types: 'chars' });
-    tl.from(text.chars, {
-      y: 100,
-      opacity: 0,
-      stagger: 0.05,
-      duration: 0.8,
-      ease: 'back.out(1.7)'
-    }, "-=0.5");
+    if (typeof SplitType !== 'undefined') {
+      const text = new SplitType(heroTitle, { types: 'chars' });
+      tl.from(text.chars, {
+        y: 100,
+        opacity: 0,
+        stagger: 0.05,
+        duration: 0.8,
+        ease: 'back.out(1.7)'
+      }, "-=0.5");
+    } else {
+      tl.from(heroTitle, {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power3.out'
+      }, "-=0.5");
+    }
   }
 
   if (heroText.length) {

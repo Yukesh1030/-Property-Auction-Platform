@@ -425,6 +425,31 @@ img[src*="Brand-logo.webp"] {
   text-align: center;
 }
 
+.section-sub.text-center { text-align: center; }
+.text-accent { color: var(--color-accent); }
+
+/* Stats Grid Fixes */
+.stats-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    width: 100%;
+}
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 2rem 1rem !important;
+    }
+    .stat-number {
+        font-size: 2.2rem !important;
+    }
+}
+@media (max-width: 480px) {
+    .stat-number {
+        font-size: 2rem !important;
+    }
+}
+
 .section-subtitle {
   text-align: center;
   color: var(--color-accent);
