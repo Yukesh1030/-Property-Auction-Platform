@@ -83,6 +83,31 @@
             flex: 1;
             min-width: 150px;
         }
+        
+        @media (max-width: 768px) {
+            .page-hero-title {
+                font-size: 2.5rem !important;
+            }
+            .search-bar {
+                padding: 0.25rem;
+            }
+            .search-bar i {
+                padding: 1rem 0 1rem 1rem !important;
+            }
+            .search-input {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
+            .search-btn {
+                padding: 0 1.5rem;
+                font-size: 0.875rem;
+            }
+            .properties-header {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -132,7 +157,7 @@
 <div class="page-hero-bg"></div>
 <div class="page-hero-overlay"></div>
 <div class="container">
-<h1 class="hero-title" style="font-size: 3.5rem;">Explore Auction Properties</h1>
+<h1 class="hero-title page-hero-title" style="font-size: 3.5rem;">Explore Auction Properties</h1>
 <p style="font-size: 1.25rem; color: rgba(255,255,255,0.8); margin-top: 1rem;">Find exceptional properties available for competitive bidding.</p>
 </div>
 </section>
@@ -175,7 +200,7 @@
 <!-- Properties Grid -->
 <section class="section" style="padding-top: 0;">
 <div class="container">
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+<div class="properties-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
 <h3 style="font-family: var(--font-secondary); font-size: 2rem;">All Properties <span style="font-size: 1rem; color: #666; font-family: var(--font-primary); font-weight: 400;">(124 Results)</span></h3>
 <div style="display: flex; gap: 1rem; align-items: center;">
 <span style="font-size: 0.875rem; color: #666;">Sort By:</span>
