@@ -90,6 +90,15 @@
 
         /* Responsive tweaks for hero */
         @media (max-width: 1024px) {
+            .hero {
+                height: auto;
+                min-height: auto;
+                align-items: flex-start;
+                padding-bottom: 4rem;
+            }
+            .hero-content {
+                padding-top: 3rem;
+            }
             .hero-live-card {
                 position: relative;
                 bottom: 0;
@@ -107,6 +116,33 @@
             }
             .hero-btns {
                 flex-direction: column;
+            }
+            .upcoming-card {
+                flex-direction: column !important;
+            }
+            .upcoming-card-date {
+                min-width: 100% !important;
+                padding: 1rem !important;
+                flex-direction: row !important;
+                gap: 1rem;
+            }
+            .upcoming-card-date span {
+                margin: 0 !important;
+            }
+            .live-bidding-card {
+                padding: 1.5rem !important;
+            }
+            #simulated-bid {
+                font-size: 2.5rem !important;
+            }
+            .live-bidding-stats {
+                gap: 1.5rem !important;
+            }
+            .success-story-card {
+                padding: 1.5rem !important;
+            }
+            .success-story-grid {
+                grid-template-columns: 1fr !important;
             }
         }
     </style>
@@ -368,8 +404,8 @@
 <h4 class="section-subtitle">Mark Your Calendar</h4>
 <h2 class="section-title gsap-fade-up">Upcoming Auctions</h2>
 <div style="margin-top: 4rem; max-width: 900px; margin-left: auto; margin-right: auto;">
-<div class="gsap-fade-up" style="display: flex; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 2rem;">
-<div style="padding: 2rem; background: var(--color-dark); color: var(--color-accent); display: flex; flex-direction: column; justify-content: center; align-items: center; min-width: 150px;">
+<div class="gsap-fade-up upcoming-card" style="display: flex; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 2rem;">
+<div class="upcoming-card-date" style="padding: 2rem; background: var(--color-dark); color: var(--color-accent); display: flex; flex-direction: column; justify-content: center; align-items: center; min-width: 150px;">
 <span style="font-size: 2.5rem; font-family: var(--font-secondary); line-height: 1;">18</span>
 <span style="font-size: 1.2rem; font-weight: 600; text-transform: uppercase;">SEP</span>
 <span style="font-size: 0.875rem; color: rgba(255,255,255,0.5);">2026</span>
@@ -401,12 +437,12 @@
 <div class="container">
 <h4 class="section-subtitle">Every Bid Changes the Story</h4>
 <h2 class="section-title gsap-fade-up">Live Bidding Experience</h2>
-<div class="gsap-fade-up" style="max-width: 600px; margin: 4rem auto 0; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 3rem; text-align: center; position: relative; overflow: hidden;">
+<div class="gsap-fade-up live-bidding-card" style="max-width: 600px; margin: 4rem auto 0; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 3rem; text-align: center; position: relative; overflow: hidden;">
 <div style="position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, transparent, var(--color-accent), transparent);"></div>
 <h4 style="color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 2px; font-size: 0.875rem; margin-bottom: 1rem;">CURRENT BID</h4>
 <div id="simulated-bid" style="font-size: 4rem; font-family: var(--font-secondary); color: var(--color-accent); line-height: 1; margin-bottom: 1rem;">₹1,84,50,000</div>
 <div style="color: #4cd964; font-weight: 500; margin-bottom: 2rem;">↑ ₹50,000</div>
-<div style="display: flex; justify-content: center; gap: 3rem; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+<div class="live-bidding-stats" style="display: flex; justify-content: center; gap: 3rem; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
 <div>
 <div style="font-size: 1.5rem; font-weight: 600;">23</div>
 <div style="font-size: 0.75rem; color: rgba(255,255,255,0.5); text-transform: uppercase;">Bids</div>
@@ -532,10 +568,10 @@
 <div class="container">
 <h4 class="section-subtitle">Data-Driven Results</h4>
 <h2 class="section-title gsap-fade-up">Success Stories</h2>
-<div class="gsap-fade-up" style="max-width: 800px; margin: 4rem auto 0; background: white; padding: 3rem; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); position: relative;">
+<div class="gsap-fade-up success-story-card" style="max-width: 800px; margin: 4rem auto 0; background: white; padding: 3rem; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); position: relative;">
 <div style="position: absolute; top: -20px; right: 30px; background: var(--color-accent); color: white; padding: 0.5rem 1.5rem; border-radius: 4px; font-weight: 600; text-transform: uppercase;">Sold</div>
 <h3 style="font-family: var(--font-secondary); font-size: 2rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #eee;">Luxury Apartment — Bangalore</h3>
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+<div class="success-story-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
 <div>
 <div style="font-size: 0.875rem; color: #666; text-transform: uppercase; margin-bottom: 0.5rem;">Starting Bid</div>
 <div style="font-size: 1.5rem; font-weight: 600;">₹68 Lakh</div>
